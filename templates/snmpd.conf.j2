@@ -1,8 +1,13 @@
 # {{ ansible_managed }}
 
+{% if snmp_user is defined %}
 createUser {{ snmp_user }} SHA {{ snmp_password }} AES {{ snmp_encryption }}
-
 rouser {{ snmp_user }} priv
+{% endif %}
+
+{% for rocommunity in snmp_rocommunities %}
+rocommunity {{ rocommunity }}
+{% endfor %}
 
 {% if snmp_location is defined %}
 sysLocation {{ snmp_location }}
